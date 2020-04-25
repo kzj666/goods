@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.dao.GoodsDetailDao">
+
+    <resultMap type="com.kk.entity.GoodsDetail" id="GoodsDetailMap">
+        <result property="gdId" column="gd_id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="gdPicUrl" column="gd_pic_url" jdbcType="VARCHAR"/>
+        <result property="gdOrder" column="gd_order" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+
+</mapper>
