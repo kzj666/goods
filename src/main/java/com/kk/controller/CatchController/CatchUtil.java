@@ -3,6 +3,7 @@ package com.kk.controller;
 import com.kk.dao.GoodsParamDao;
 import com.kk.entity.Goods;
 import com.kk.entity.GoodsCover;
+import com.kk.entity.GoodsDetail;
 import com.kk.entity.GoodsParam;
 import com.kk.service.GoodsCoverService;
 import com.kk.service.GoodsDetailService;
@@ -54,7 +55,7 @@ public class CatchUtil {
         //爬到数据
         for (int i = 1; i < 88; i++) {
             // 按页爬取数据
-            List<Goods> list = HtmlParseUtil.parseJM(i);
+            List<Goods> list = HtmlParseUtil.parseGoodsTitleAndPrice(i);
             count += goodsService.add(list);
         }
         long end = System.currentTimeMillis();
@@ -75,7 +76,7 @@ public class CatchUtil {
         //爬到数据
         for (int i = 1; i < 80; i++) {
             // 按页爬取数据
-            List<GoodsCover> list = HtmlParseUtil.parseJMCover(i);
+            List<GoodsCover> list = HtmlParseUtil.parseGoodsCover(i);
             count += goodsCoverService.add(list);
         }
         long end = System.currentTimeMillis();
@@ -89,21 +90,44 @@ public class CatchUtil {
      * @throws IOException
      */
     @ResponseBody
-    @GetMapping("addDetail")
-    public String addDetail() throws IOException {
+    @GetMapping("addParam")
+    public String addParam() throws IOException {
         long begin = System.currentTimeMillis();
         int count = 0;
         //爬到数据
         for (int i = 1; i < 88; i++) {
             // 按页爬取到每个商品页的跳转链接
-            List<String> list = HtmlParseUtil.parseJMParam(i);
-            List<GoodsParam> params = HtmlParseUtil.parseJMParam2(list);
+            List<String> list = HtmlParseUtil.parseGoodsUrl(i);
+            List<GoodsParam> params = HtmlParseUtil.parseGoodsParam(list);
             count += goodsParamService.add(params);
         }
         long end = System.currentTimeMillis();
         System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
         return "爬取了" + count +"";
     }
+
+
+
+
+    /**
+     * 插入商品详情图片到GoodsDetial对象对应的t_goods_detail表中
+     * @return
+     * @throws IOException
+     *//*
+    @ResponseBody
+    @GetMapping("addDetail")
+    public String addDetail() throws IOException {
+        long begin = System.currentTimeMillis();
+        int count = 0;
+        //爬到数据
+        for (int i = 1; i < 2; i++) {
+            List<String> list = HtmlParseUtil.parseGoodsUrl(i);
+            List<GoodsDetail> details = HtmlParseUtil.parseGoodsPic(list);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
+        return "爬取了" + count +"";
+    }*/
 
 
 

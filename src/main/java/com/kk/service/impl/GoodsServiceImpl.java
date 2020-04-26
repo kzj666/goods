@@ -24,18 +24,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsDao goodsDao;
 
-
-    @Override
-    // @Cacheable注解的作用是：第一次访问的时候将方法的返回结果放入缓存，
-    // 第二次访问的时候不再执行方法内部的代码，而是从缓存中直接提取数据。
-    // 此处的两个参数，value代表键值前缀，key代表键值编号，在redis中表示为【goods::1、goods::2】
-    @Cacheable(value = "goods", key = "#goodsId")
-    public Goods getGoodById(Integer goodsId) {
-        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("goods_id", goodsId);
-        return goodsDao.selectOne(wrapper);
-    }
-
     /**
      * 用来爬取插入数据的方法
      * @param goods
@@ -51,6 +39,24 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return i;
     }
+
+
+    /**
+     * Cacheable注解的作用是：第一次访问的时候将方法的返回结果放入缓存，
+     * 第二次访问的时候不再执行方法内部的代码，而是从缓存中直接提取数据。
+     * 此处的两个参数，value代表键值前缀，key代表键值编号，在redis中表示为【goods::1、goods::2】
+     * @param goodsId
+     * @return
+     */
+    @Override
+    @Cacheable(value = "goods", key = "#goodsId")
+    public Goods getGoodById(Integer goodsId) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_id", goodsId);
+        return goodsDao.selectOne(wrapper);
+    }
+
+
 
 }
 

@@ -5,6 +5,7 @@ import com.kk.entity.GoodsCover;
 import com.kk.entity.GoodsParam;
 import com.kk.dao.GoodsParamDao;
 import com.kk.service.GoodsParamService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,15 +22,11 @@ public class GoodsParamServiceImpl implements GoodsParamService {
     @Resource
     private GoodsParamDao goodsParamDao;
 
-
-    @Override
-    public List<GoodsParam> findParams(Integer goodsId) {
-        QueryWrapper<GoodsParam> wrapper = new QueryWrapper<>();
-        wrapper.eq("goods_id", goodsId)
-                .orderByAsc("gp_order");
-        return goodsParamDao.selectList(wrapper);
-    }
-
+    /**
+     * 插入爬取的数据
+     * @param goodsParams
+     * @return
+     */
     @Override
     public int add(List<GoodsParam> goodsParams) {
         int i = 0;
@@ -39,5 +36,17 @@ public class GoodsParamServiceImpl implements GoodsParamService {
         }
         return i;
     }
+
+
+
+    @Override
+    @Cacheable(value = "params", key = "#goodsId")
+    public List<GoodsParam> findParams(Integer goodsId) {
+        QueryWrapper<GoodsParam> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_id", goodsId)
+                .orderByAsc("gp_order");
+        return goodsParamDao.selectList(wrapper);
+    }
+
 
 }

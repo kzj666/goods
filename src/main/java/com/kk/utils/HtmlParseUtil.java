@@ -34,7 +34,7 @@ public class HtmlParseUtil {
      * @return
      * @throws IOException
      */
-    public static List<Goods> parseJM(int p) throws IOException {
+    public static List<Goods> parseGoodsTitleAndPrice(int p) throws IOException {
 
         String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
 
@@ -73,7 +73,7 @@ public class HtmlParseUtil {
      * @return
      * @throws IOException
      */
-    public static List<GoodsCover> parseJMCover(int p) throws IOException {
+    public static List<GoodsCover> parseGoodsCover(int p) throws IOException {
 
         String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
 
@@ -104,7 +104,7 @@ public class HtmlParseUtil {
      * @return
      * @throws IOException
      */
-    public static List<String> parseJMParam(int p) throws IOException {
+    public static List<String> parseGoodsUrl(int p) throws IOException {
 
         String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
 
@@ -121,19 +121,18 @@ public class HtmlParseUtil {
 
 
     /**
-     * 利用传入的链接列表，遍历进入个商品主页面，拿到商品的商品参数，放入ArrayList<GoodsParam>列表后返回
+     * 利用传入的链接列表，遍历进入各商品主页面，拿到商品的商品参数，放入ArrayList<GoodsParam>列表后返回
      * @param list
      * @return
      * @throws IOException
      */
-    public static List<GoodsParam> parseJMParam2(List<String> list) throws IOException {
+    public static List<GoodsParam> parseGoodsParam(List<String> list) throws IOException {
         int count = 0;
         int num = 0;
         ArrayList<GoodsParam> paramsList = new ArrayList<>();
 
-        for (String s : list) {
-            String url = s;
-            Document document = Jsoup.parse(new URL(s), 30000);
+        for (String url : list) {
+            Document document = Jsoup.parse(new URL(url), 30000);
             // 拿到每个页面商品信息的div元素
             Elements element1 = document.getElementsByClass("deal_con_content");
             Elements element2 = document.getElementsByClass("deal_specs");
@@ -180,4 +179,5 @@ public class HtmlParseUtil {
         System.out.println("总共" + L+"个商品");
         return paramsList;
     }
+
 }

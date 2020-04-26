@@ -23,14 +23,6 @@ public class GoodsCoverServiceImpl implements GoodsCoverService {
     @Resource
     private GoodsCoverDao goodsCoverDao;
 
-    @Override
-    @Cacheable(value = "covers", key = "#goodsId")
-    public GoodsCover findCover(Integer goodsId) {
-        QueryWrapper<GoodsCover> wrapper = new QueryWrapper<>();
-        wrapper.eq("goods_id", goodsId);
-        return goodsCoverDao.selectOne(wrapper);
-    }
-
     /**
      * 用来爬取插入数据的方法
      * @param goodsCovers
@@ -45,4 +37,14 @@ public class GoodsCoverServiceImpl implements GoodsCoverService {
         }
         return i;
     }
+
+    @Override
+    @Cacheable(value = "covers", key = "#goodsId")
+    public GoodsCover findCover(Integer goodsId) {
+        QueryWrapper<GoodsCover> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_id", goodsId);
+        return goodsCoverDao.selectOne(wrapper);
+    }
+
+
 }
