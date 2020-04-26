@@ -1,6 +1,7 @@
 package com.kk.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.kk.entity.GoodsCover;
 import com.kk.entity.GoodsParam;
 import com.kk.dao.GoodsParamDao;
 import com.kk.service.GoodsParamService;
@@ -27,6 +28,16 @@ public class GoodsParamServiceImpl implements GoodsParamService {
         wrapper.eq("goods_id", goodsId)
                 .orderByAsc("gp_order");
         return goodsParamDao.selectList(wrapper);
+    }
+
+    @Override
+    public int add(List<GoodsParam> goodsParams) {
+        int i = 0;
+        for (GoodsParam goodsParam : goodsParams) {
+            goodsParamDao.insert(goodsParam);
+            i++;
+        }
+        return i;
     }
 
 }

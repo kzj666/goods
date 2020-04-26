@@ -1,7 +1,9 @@
 package com.kk.controller;
 
+import com.kk.dao.GoodsParamDao;
 import com.kk.entity.Goods;
 import com.kk.entity.GoodsCover;
+import com.kk.entity.GoodsParam;
 import com.kk.service.GoodsCoverService;
 import com.kk.service.GoodsDetailService;
 import com.kk.service.GoodsParamService;
@@ -26,7 +28,7 @@ import java.util.List;
 @Controller
 public class GoodsController {
 
-    Logger logger = LoggerFactory.getLogger(GoodsController.class);
+    Logger logger = LoggerFactory.getLogger(com.kk.controller.GoodsController.class);
 
     @Resource
     private GoodsService goodsService;
@@ -47,37 +49,5 @@ public class GoodsController {
         model.addAttribute("gdparams", goodsParamService.findParams(goodsId));
         return "jumei";
     }
-
-//    @ResponseBody
-//    @GetMapping("add")
-//    public String add() throws IOException {
-//        long begin = System.currentTimeMillis();
-//        int count = 0;
-//        //爬到数据
-//        for (int i = 1; i < 88; i++) {
-//            // 按页爬取数据
-//            List<Goods> list = HtmlParseUtil.parseJM(i);
-//            count += goodsService.add(list);
-//        }
-//        long end = System.currentTimeMillis();
-//        System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
-//        return "爬取了" + count + "条数据，并插入数据库";
-//    }
-//
-//    @ResponseBody
-//    @GetMapping("addCover")
-//    public String addCover() throws IOException {
-//        long begin = System.currentTimeMillis();
-//        int count = 0;
-//        //爬到数据
-//        for (int i = 1; i < 80; i++) {
-//            // 按页爬取数据
-//            List<GoodsCover> list = HtmlParseUtil.parseJMCover(i);
-//            count += goodsCoverService.add(list);
-//        }
-//        long end = System.currentTimeMillis();
-//        System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
-//        return "爬取了" + count + "条图片url数据，并插入数据库";
-//    }
 
 }

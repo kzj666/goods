@@ -1,5 +1,6 @@
 package com.kk.service;
 
+import com.kk.entity.GoodsCover;
 import com.kk.entity.GoodsParam;
 import java.util.List;
 
@@ -12,5 +13,7 @@ import java.util.List;
 public interface GoodsParamService {
 
     List<GoodsParam> findParams(Integer goodsId);
+
+    int add(List<GoodsParam> goodsParams);
 
 }

@@ -3,6 +3,7 @@ package com.kk.utils;
 import com.kk.dao.GoodsDao;
 import com.kk.entity.Goods;
 import com.kk.entity.GoodsCover;
+import com.kk.entity.GoodsDetail;
 import com.kk.entity.GoodsParam;
 import com.kk.service.GoodsService;
 import org.jsoup.Jsoup;
@@ -18,16 +19,24 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class HtmlParseUtil {
 
     private static int K = 1;
+    private static int L = 0;
+    private static int J = 1;
 
-    // 此方法是爬取口红的名称和价格的方法
-    // p是页数，动态传入
+    /**
+     * 此方法是爬取口红的标题和价格的方法，p是页数，动态传入
+     *
+     * @param p
+     * @return
+     * @throws IOException
+     */
     public static List<Goods> parseJM(int p) throws IOException {
 
-        String url = "http://search.jumei.com/?filter=0-11-"+p+"&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
+        String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
 
         Document document = Jsoup.parse(new URL(url), 30000);
         Elements elements = document.getElementsByClass("s_l_name");
@@ -36,14 +45,14 @@ public class HtmlParseUtil {
         // 将爬到的数据放入对象集合中
         for (int i = 0; i < elements.size(); i++) {
             Goods goods = new Goods();
-            goods.setGoodsId(i+1);
+            goods.setGoodsId(i + 1);
             String a = elements.get(i).getElementsByTag("a").text();
             // 现价
             String span = elements2.get(i).getElementsByTag("span").eq(0).text();
             // 原价
             String del = elements2.get(i).getElementsByTag("del").eq(0).text().replace("¥", "");
             // 判断原价是否为空，为空则不爬该条记录
-            if(!del.isEmpty()) {
+            if (!del.isEmpty()) {
                 Double oprice = Double.parseDouble(span);
                 Double dprice = Double.parseDouble(del);
                 goods.setTitle(a);
@@ -57,9 +66,16 @@ public class HtmlParseUtil {
         }
         return list;
     }
+
+    /**
+     * 爬封面图片地址,插入到ArrayList<GoodsCover>数组后返回
+     * @param p
+     * @return
+     * @throws IOException
+     */
     public static List<GoodsCover> parseJMCover(int p) throws IOException {
 
-        String url = "http://search.jumei.com/?filter=0-11-"+p+"&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
+        String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
 
         Document document = Jsoup.parse(new URL(url), 30000);
         Elements elements = document.getElementsByClass("item_wrap_right");
@@ -68,7 +84,7 @@ public class HtmlParseUtil {
         for (int i = 0; i < elements.size(); i++) {
             GoodsCover goodsCover = new GoodsCover();
             String picHref = elements.get(i).getElementsByTag("img").attr("src");
-            if(!picHref.isEmpty()){
+            if (!picHref.isEmpty()) {
                 goodsCover.setGcId(K);
                 goodsCover.setGcOrder(1);
                 goodsCover.setGcPicUrl(picHref);
@@ -79,5 +95,89 @@ public class HtmlParseUtil {
             }
         }
         return list;
+    }
+
+
+    /**
+     * 拿到各商品的主页跳转链接，放入ArrayList<String>链接列表中后返回
+     * @param p
+     * @return
+     * @throws IOException
+     */
+    public static List<String> parseJMParam(int p) throws IOException {
+
+        String url = "http://search.jumei.com/?filter=0-11-" + p + "&search=%E5%8F%A3%E7%BA%A2&bid=4&site=gz";
+
+        Document document = Jsoup.parse(new URL(url), 30000);
+        Elements elements = document.getElementsByClass("item_wrap_right");
+        ArrayList<String> hrefs = new ArrayList<>();
+        for (Element element : elements) {
+            String h = element.getElementsByTag("a").attr("href");
+            hrefs.add(h);
+        }
+//        System.out.println(hrefs);
+        return hrefs;
+    }
+
+
+    /**
+     * 利用传入的链接列表，遍历进入个商品主页面，拿到商品的商品参数，放入ArrayList<GoodsParam>列表后返回
+     * @param list
+     * @return
+     * @throws IOException
+     */
+    public static List<GoodsParam> parseJMParam2(List<String> list) throws IOException {
+        int count = 0;
+        int num = 0;
+        ArrayList<GoodsParam> paramsList = new ArrayList<>();
+
+        for (String s : list) {
+            String url = s;
+            Document document = Jsoup.parse(new URL(s), 30000);
+            // 拿到每个页面商品信息的div元素
+            Elements element1 = document.getElementsByClass("deal_con_content");
+            Elements element2 = document.getElementsByClass("deal_specs");
+
+            if (!element1.isEmpty()) {
+                L++;
+                count++;
+                for (Element element : element1) {
+                    Elements trs = element.getElementsByTag("tr");
+                    for (Element tr : trs) {
+                        // 每一个属性。一个属性一条记录，对应一个实例对象
+                        GoodsParam goodsParam = new GoodsParam();
+                        goodsParam.setGpId(K);
+                        goodsParam.setGporder(J++);
+                        goodsParam.setGoodsId(L);
+                        goodsParam.setGpParamname(tr.getElementsByTag("td").eq(0).text());
+                        goodsParam.setGpParamvalue(tr.getElementsByTag("td").eq(1).text());
+                        K++;
+                        paramsList.add(goodsParam);
+                    }
+                    J = 1;
+                }
+            } else if (!element2.isEmpty()) {
+                L++;
+                num++;
+                for (Element element : element2) {
+                    Elements trs = element.getElementsByTag("tr");
+                    for (Element tr : trs) {
+                        GoodsParam goodsParam = new GoodsParam();
+                        goodsParam.setGpId(K);
+                        goodsParam.setGporder(J++);
+                        goodsParam.setGoodsId(L);
+                        goodsParam.setGpParamname(tr.getElementsByTag("th").text() );
+                        goodsParam.setGpParamvalue(tr.getElementsByTag("td").text());
+                        K++;
+                        paramsList.add(goodsParam);
+                    }
+                    J = 1;
+                }
+            }
+        }
+        System.out.println("count=" + count);
+        System.out.println("num=" + num);
+        System.out.println("总共" + L+"个商品");
+        return paramsList;
     }
 }
