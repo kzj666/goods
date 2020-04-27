@@ -14,7 +14,19 @@ import java.util.List;
  */
 public interface GoodsCoverService {
 
+    /**
+     * 爬数据插入
+     * @param goods
+     * @return
+     */
+    int add(List<GoodsCover> goods);
+
+    /**
+     * 根据商品id查封面图
+     * @param goodsId
+     * @return
+     */
     GoodsCover findCover(Integer goodsId);
 
-    int add(List<GoodsCover> goods);
+
 }

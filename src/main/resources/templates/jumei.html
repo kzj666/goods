@@ -24,8 +24,8 @@
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta property="qc:admins" content="56207406376255516375" />
-    <link rel="stylesheet" type="text/css" href="//a1.global.jmstatic.com/b7e3d92f24cf2afe/common.css" />
-    <link rel="stylesheet" type="text/css" href="//a3.global.jmstatic.com/a8c98f9df9004d8c/app.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/app.css}" />
     <script type="text/javascript">document.domain = 'jumeiglobal.com';
     var JM = JM || {};
     JM.SITE_MAIN_WEBBASEURL = 'http://www.jumeiglobal.com/';
@@ -65,7 +65,7 @@
     _adwq.push(['_setAccount', '1ng4e']);
     _adwq.push(['_setDomainName', '.jumeiglobal.com']);
     _adwq.push(['_trackPageview']);</script>
-    <link rel="stylesheet" type="text/css" href="http://a1.global.jmstatic.com/aef54daf5cb94ea4/detail_other.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/detail_other.css}" />
 </head>
 <style>
     .deal_con_content td{
@@ -359,8 +359,10 @@ window.jQuery = window.$ = function(callback) {
                             <a href="#syff">使用方法</a></li>
                         <li>
                             <a href="#spsp">商品实拍</a></li>
-                        <li id="yhkb_link" class="yhkb_link">
-                            <a href="#yhkb">用户口碑</a></li>
+                        <li>
+                            <a href="#yhkb">商品评价</a></li>
+                        <!--<li id="yhkb_link" class="yhkb_link">-->
+                            <!--<a href="#yhkb">用户口碑</a></li>-->
                         <li>
                             <a href="#cjwt">关于极速免税店</a></li>
                     </ul>
@@ -423,15 +425,23 @@ window.jQuery = window.$ = function(callback) {
                         <img th:each="detail:${details}" th:src="${detail.gdPicUrl}" alt="" style="white-space:normal;" />
                     </div>
                 </div>
+                <!--用户口碑-->
+                <div id="yhkb" class="content_nav_con">
+                    <div class="detail_content yhkb_box"></div>
+                    <!--用户口碑-->
+                        <div th:each="evaluate:${evaluates}">
+                            <p th:text="'评论内容：'+ ${evaluate.content}"></p>
+                            <p th:text="'评论时间：'+ ${#dates.format(evaluate.createTime,'yyyy-MM-dd HH:mm:ss')}"></p>
+                            <p th:text="'点赞数：'+ ${evaluate.starts}"></p>
+                            <br><hr style="border: #ff3217">
+                    </div>
+                </div>
 
                 <!--划线价说明图片-->
                 <img src="http://p0.jmstatic.com/mobile/other/other/marketprice_pc.png" class="marketprice_pc" />
                 <!--划线价说明图片 end-->
-                <!--用户口碑-->
-                <div id="yhkb" class="content_nav_con yhkb">
-                    <div class="detail_content yhkb_box" id="deal_koubei"></div>
-                    <div class="content_text" id="script_koubei" koubeiwrap="script_koubei" productid="4967028"></div>
-                </div>
+
+
                 <!--关于聚美极速免税店-->
                 <div id="cjwt" class="content_nav_con">
                     <div class="detail_content gyhwg_box"></div>

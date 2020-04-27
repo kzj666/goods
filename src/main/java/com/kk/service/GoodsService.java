@@ -14,8 +14,19 @@ import java.util.List;
  * @since 2020-04-25 15:57:22
  */
 public interface GoodsService{
-
-    Goods getGoodById(Integer goodsId);
-
+    /**
+     * 爬取数据插入
+     * @param goods
+     * @return
+     */
     int add(List<Goods> goods);
+
+
+    /**
+     * 根据商品id查询
+     * @param goodsId
+     * @return
+     */
+    Goods findGoodById(Integer goodsId);
+
 }

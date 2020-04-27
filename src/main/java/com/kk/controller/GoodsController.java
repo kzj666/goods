@@ -4,10 +4,7 @@ import com.kk.dao.GoodsParamDao;
 import com.kk.entity.Goods;
 import com.kk.entity.GoodsCover;
 import com.kk.entity.GoodsParam;
-import com.kk.service.GoodsCoverService;
-import com.kk.service.GoodsDetailService;
-import com.kk.service.GoodsParamService;
-import com.kk.service.GoodsService;
+import com.kk.service.*;
 import com.kk.utils.HtmlParseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +27,9 @@ public class GoodsController {
 
     Logger logger = LoggerFactory.getLogger(com.kk.controller.GoodsController.class);
 
+
+
+
     @Resource
     private GoodsService goodsService;
     @Resource
@@ -38,15 +38,18 @@ public class GoodsController {
     private GoodsDetailService goodsDetailService;
     @Resource
     private GoodsParamService goodsParamService;
+    @Resource
+    private EvaluateService evaluateService;
 
 
     @GetMapping("goods")
     public String showGoods(Integer goodsId, Model model) {
         logger.info("goodId="+goodsId);
-        model.addAttribute("good", goodsService.getGoodById(goodsId));
+        model.addAttribute("good", goodsService.findGoodById(goodsId));
         model.addAttribute("cover", goodsCoverService.findCover(goodsId));
         model.addAttribute("details", goodsDetailService.findDetails(goodsId));
         model.addAttribute("gdparams", goodsParamService.findParams(goodsId));
+        model.addAttribute("evaluates", evaluateService.findEvaluates(goodsId));
         return "jumei";
     }
 

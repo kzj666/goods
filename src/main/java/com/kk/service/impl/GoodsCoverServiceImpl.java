@@ -24,7 +24,7 @@ public class GoodsCoverServiceImpl implements GoodsCoverService {
     private GoodsCoverDao goodsCoverDao;
 
     /**
-     * 用来爬取插入数据的方法
+     * 拿到传入的对象列表，循环插入数据
      * @param goodsCovers
      * @return
      */

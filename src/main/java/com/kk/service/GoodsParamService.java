@@ -12,8 +12,17 @@ import java.util.List;
  */
 public interface GoodsParamService {
 
-    List<GoodsParam> findParams(Integer goodsId);
-
+    /**
+     * 爬数据插入
+     * @param goodsParams
+     * @return
+     */
     int add(List<GoodsParam> goodsParams);
 
+    /**
+     * 根据商品id查评论
+     * @param goodsId
+     * @return
+     */
+    List<GoodsParam> findParams(Integer goodsId);
 }

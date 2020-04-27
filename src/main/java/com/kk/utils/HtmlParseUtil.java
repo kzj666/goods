@@ -1,10 +1,13 @@
 package com.kk.utils;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.kk.dao.GoodsDao;
-import com.kk.entity.Goods;
-import com.kk.entity.GoodsCover;
-import com.kk.entity.GoodsDetail;
-import com.kk.entity.GoodsParam;
+import com.kk.entity.*;
 import com.kk.service.GoodsService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +16,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -69,6 +73,7 @@ public class HtmlParseUtil {
 
     /**
      * 爬封面图片地址,插入到ArrayList<GoodsCover>数组后返回
+     *
      * @param p
      * @return
      * @throws IOException
@@ -97,9 +102,9 @@ public class HtmlParseUtil {
         return list;
     }
 
-
     /**
      * 拿到各商品的主页跳转链接，放入ArrayList<String>链接列表中后返回
+     *
      * @param p
      * @return
      * @throws IOException
@@ -119,9 +124,9 @@ public class HtmlParseUtil {
         return hrefs;
     }
 
-
     /**
      * 利用传入的链接列表，遍历进入各商品主页面，拿到商品的商品参数，放入ArrayList<GoodsParam>列表后返回
+     *
      * @param list
      * @return
      * @throws IOException
@@ -165,7 +170,7 @@ public class HtmlParseUtil {
                         goodsParam.setGpId(K);
                         goodsParam.setGporder(J++);
                         goodsParam.setGoodsId(L);
-                        goodsParam.setGpParamname(tr.getElementsByTag("th").text() );
+                        goodsParam.setGpParamname(tr.getElementsByTag("th").text());
                         goodsParam.setGpParamvalue(tr.getElementsByTag("td").text());
                         K++;
                         paramsList.add(goodsParam);
@@ -176,8 +181,49 @@ public class HtmlParseUtil {
         }
         System.out.println("count=" + count);
         System.out.println("num=" + num);
-        System.out.println("总共" + L+"个商品");
+        System.out.println("总共" + L + "个商品");
         return paramsList;
+    }
+
+
+
+
+    public static List<Evaluate> parseGoodsEvaluate(int i)throws NullPointerException{
+        final String GET_COMMENTS_URL = "https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&productId=100006262957&score="+i+"&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1";
+        HttpRequest request = HttpUtil.createGet(GET_COMMENTS_URL);
+        // 伪造成火狐
+        request.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0");
+        request.header("Referer", "https://item.jd.com/100006262957.html");
+        // 拿到json数据
+        String resJson = StrUtil.sub(request.execute().body(), 20, -2);
+        // 将json数据转化为Json对象
+        JSONObject jsonObject = JSON.parseObject(resJson);
+        // 将Json对象转换成数组
+        JSONArray comments = jsonObject.getJSONArray("comments");
+        JSONArray zans = jsonObject.getJSONArray("zans");
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        ArrayList<Evaluate> list3 = new ArrayList<>();
+
+
+        try {
+            comments.forEach(comment -> list1.add(((JSONObject) comment).get("content").toString()));
+            comments.forEach(zan -> list2.add(((JSONObject) zan).get("usefulVoteCount").toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (int j = 0; j < list1.size(); j++) {
+            Evaluate evaluate = new Evaluate();
+            evaluate.setContent(list1.get(j));
+            evaluate.setStarts(Integer.parseInt(list2.get(j)));
+            evaluate.setGoodsId(K);
+            list3.add(evaluate);
+        }
+        K++;
+//        System.out.println("list3长度="+list3.size());
+
+        return list3;
     }
 
 }

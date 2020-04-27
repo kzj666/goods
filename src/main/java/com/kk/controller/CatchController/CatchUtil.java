@@ -1,14 +1,8 @@
-package com.kk.controller;
+package com.kk.controller.CatchController;
 
 import com.kk.dao.GoodsParamDao;
-import com.kk.entity.Goods;
-import com.kk.entity.GoodsCover;
-import com.kk.entity.GoodsDetail;
-import com.kk.entity.GoodsParam;
-import com.kk.service.GoodsCoverService;
-import com.kk.service.GoodsDetailService;
-import com.kk.service.GoodsParamService;
-import com.kk.service.GoodsService;
+import com.kk.entity.*;
+import com.kk.service.*;
 import com.kk.utils.HtmlParseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +34,13 @@ public class CatchUtil {
     private GoodsDetailService goodsDetailService;
     @Resource
     private GoodsParamService goodsParamService;
+    @Resource
+    private EvaluateService evaluateService;
 
 
     /**
      * 插入商品标题和描述到Goods对象对应的t_goods表中
+     *
      * @return
      * @throws IOException
      */
@@ -65,6 +62,7 @@ public class CatchUtil {
 
     /**
      * 插入商品封面到GoodsCover对象对应的t_goods_Cover表中
+     *
      * @return
      * @throws IOException
      */
@@ -86,6 +84,7 @@ public class CatchUtil {
 
     /**
      * 插入商品参数到GoodsParam对象对应的t_goods_param表中
+     *
      * @return
      * @throws IOException
      */
@@ -103,14 +102,13 @@ public class CatchUtil {
         }
         long end = System.currentTimeMillis();
         System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
-        return "爬取了" + count +"";
+        return "爬取了" + count + "";
     }
-
-
 
 
     /**
      * 插入商品详情图片到GoodsDetial对象对应的t_goods_detail表中
+     *
      * @return
      * @throws IOException
      *//*
@@ -128,7 +126,24 @@ public class CatchUtil {
         System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
         return "爬取了" + count +"";
     }*/
+    @ResponseBody
+    @GetMapping("addEvaluate")
+    public String addEvaluate() throws IOException {
+        long begin = System.currentTimeMillis();
+        int count = 0;
+        for (int f = 0; f < 406; f++) {
+            System.out.println("第"+(f+1)+"个六件商品的10条评论插完");
+            for (int i = 0; i < 6; i++) {
+                // 拿到第i页的评论 对象列表
+                List<Evaluate> evaluates = HtmlParseUtil.parseGoodsEvaluate(i);
+//                System.out.println(evaluates);
+                count += evaluateService.addEvaluate(evaluates);
+//                System.out.println("------------------------第"+(i+1)+"个商品的评论插完了---------------------------");
+            }
+        }
 
-
-
+        long end = System.currentTimeMillis();
+        System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
+        return "插入了" + count + "条评论。"+"用时：" + (end - begin) + "毫秒";
+    }
 }

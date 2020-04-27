@@ -23,7 +23,7 @@ public class GoodsParamServiceImpl implements GoodsParamService {
     private GoodsParamDao goodsParamDao;
 
     /**
-     * 插入爬取的数据
+     * 拿到传入的对象列表，循环插入数据
      * @param goodsParams
      * @return
      */

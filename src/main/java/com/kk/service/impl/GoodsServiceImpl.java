@@ -25,7 +25,7 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsDao goodsDao;
 
     /**
-     * 用来爬取插入数据的方法
+     * 拿到传入的对象列表，循环插入数据
      * @param goods
      * @return
      * @throws IOException
@@ -50,7 +50,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     @Cacheable(value = "goods", key = "#goodsId")
-    public Goods getGoodById(Integer goodsId) {
+    public Goods findGoodById(Integer goodsId) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         wrapper.eq("goods_id", goodsId);
         return goodsDao.selectOne(wrapper);
