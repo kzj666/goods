@@ -36,7 +36,11 @@ public class EvaluateServiceImpl implements EvaluateService {
         return count;
     }
 
-
+    /**
+     * 根据商品id查商品评论
+     * @param goodsId
+     * @return
+     */
     @Override
     @Cacheable(value = "evaluates", key = "#goodsId")
     public List<Evaluate> findEvaluates(int goodsId) {

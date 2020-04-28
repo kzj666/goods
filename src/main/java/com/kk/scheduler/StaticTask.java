@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 创建一个任务调度，每五分钟进行一次，对更新的商品，重新生成静态页面
+ * 创建任务调度，每五分钟进行一次，对更新的商品，重新生成静态页面
  */
 @Component
 public class StaticTask {

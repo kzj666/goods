@@ -29,7 +29,10 @@ public interface GoodsService{
      */
     Goods findGoodById(Integer goodsId);
 
-
+    /**
+     * 查找最近五分钟更新过的商品
+     * @return
+     */
     List<Goods> findLast5M();
 
 

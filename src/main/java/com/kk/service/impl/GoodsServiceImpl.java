@@ -40,7 +40,6 @@ public class GoodsServiceImpl implements GoodsService {
         return i;
     }
 
-
     /**
      * Cacheable注解的作用是：第一次访问的时候将方法的返回结果放入缓存，
      * 第二次访问的时候不再执行方法内部的代码，而是从缓存中直接提取数据。
@@ -57,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     /**
-     * 查询到最近五分钟内修改的商品
+     * 查找最近五分钟更新过的商品
      * @return
      */
     @Override

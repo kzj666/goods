@@ -21,7 +21,6 @@ import java.util.Map;
 
 /**
  * (Goods)表控制层
- *
  * @author makejava
  * @since 2020-04-24 16:12:33
  */
@@ -45,7 +44,12 @@ public class GoodsController {
     @Autowired
     private TemplateEngine templateEngine;
 
-
+    /**
+     * 根据goodsId查出商品的所有信息
+     * @param goodsId
+     * @param model
+     * @return
+     */
     @GetMapping("goods")
     public String showGoods(Integer goodsId, Model model) {
         logger.info("goodId=" + goodsId);

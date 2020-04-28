@@ -21,6 +21,11 @@ public class GoodsDetailServiceImpl implements GoodsDetailService {
     @Resource
     private GoodsDetailDao goodsDetailDao;
 
+    /**
+     * 根据商品id查商品详情图
+     * @param goodsId
+     * @return
+     */
     @Override
     public List<GoodsDetail> findDetails(Integer goodsId) {
         QueryWrapper<GoodsDetail> wrapper = new QueryWrapper<>();

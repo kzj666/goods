@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface GoodsDetailService {
 
+    /**
+     * 根据商品id查商品详情图
+     * @param goodsId
+     * @return
+     */
     List<GoodsDetail> findDetails(Integer goodsId);
 
 }

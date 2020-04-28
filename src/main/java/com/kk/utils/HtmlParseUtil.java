@@ -24,6 +24,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 爬数据的工具类
+ */
 @Component
 public class HtmlParseUtil {
 

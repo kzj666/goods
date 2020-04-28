@@ -15,10 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * (Goods)表控制层
- *
- * @author makejava
- * @since 2020-04-24 16:12:33
+ * 实现---爬取的数据，加入数据表中
  */
 @Controller
 @RequestMapping("insert")
@@ -40,7 +37,6 @@ public class CatchUtil {
 
     /**
      * 插入商品标题和描述到Goods对象对应的t_goods表中
-     *
      * @return
      * @throws IOException
      */
@@ -62,7 +58,6 @@ public class CatchUtil {
 
     /**
      * 插入商品封面到GoodsCover对象对应的t_goods_Cover表中
-     *
      * @return
      * @throws IOException
      */
@@ -84,7 +79,6 @@ public class CatchUtil {
 
     /**
      * 插入商品参数到GoodsParam对象对应的t_goods_param表中
-     *
      * @return
      * @throws IOException
      */
@@ -116,6 +110,11 @@ public class CatchUtil {
         return "";
     }
 
+    /**
+     * 插入商品评论到Evaluate对象对应的t_evaluatem表中
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
     @GetMapping("addEvaluate")
     public String addEvaluate() throws IOException {

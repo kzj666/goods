@@ -21,7 +21,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @TableName(value = "t_goods")
 public class Goods implements Serializable {
-//    private static final long serialVersionUID = -35289697168179836L;
     private static final long serialVersionUID = 751720845248481651L;
     /**
     * 商品id

@@ -19,9 +19,9 @@ public interface EvaluateService {
 
     /**
      * 根据商品id查商品评论
-     * @param GoodsId
+     * @param goodsId
      * @return
      */
-    List<Evaluate> findEvaluates(int GoodsId);
+    List<Evaluate> findEvaluates(int goodsId);
 
 }

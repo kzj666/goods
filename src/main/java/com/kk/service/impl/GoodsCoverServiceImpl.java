@@ -38,6 +38,11 @@ public class GoodsCoverServiceImpl implements GoodsCoverService {
         return i;
     }
 
+    /**
+     * 根据商品id查封面图
+     * @param goodsId
+     * @return
+     */
     @Override
     @Cacheable(value = "covers", key = "#goodsId")
     public GoodsCover findCover(Integer goodsId) {

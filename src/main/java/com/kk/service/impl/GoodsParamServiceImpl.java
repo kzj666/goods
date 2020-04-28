@@ -38,7 +38,11 @@ public class GoodsParamServiceImpl implements GoodsParamService {
     }
 
 
-
+    /**
+     * 根据商品id查评论
+     * @param goodsId
+     * @return
+     */
     @Override
     @Cacheable(value = "params", key = "#goodsId")
     public List<GoodsParam> findParams(Integer goodsId) {
