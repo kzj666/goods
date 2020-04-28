@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kk.entity.GoodsDetail;
 import com.kk.dao.GoodsDetailDao;
 import com.kk.service.GoodsDetailService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ public class GoodsDetailServiceImpl implements GoodsDetailService {
      * @return
      */
     @Override
+    @Cacheable(value = "details", key = "#goodsId")
     public List<GoodsDetail> findDetails(Integer goodsId) {
         QueryWrapper<GoodsDetail> wrapper = new QueryWrapper<>();
         wrapper.eq("goods_id", goodsId)

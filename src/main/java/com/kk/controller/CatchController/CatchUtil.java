@@ -1,5 +1,8 @@
 package com.kk.controller.CatchController;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.kk.dao.GoodsDetailDao;
 import com.kk.dao.GoodsParamDao;
 import com.kk.entity.*;
 import com.kk.service.*;
@@ -99,6 +102,8 @@ public class CatchUtil {
         return "爬取了" + count + "";
     }
 
+    @Resource
+    GoodsDetailDao goodsDetailDao;
     /**
      * 未实现
      * @return
@@ -106,8 +111,31 @@ public class CatchUtil {
      */
     @ResponseBody
     @GetMapping("addDetail")
-    public String addDetail() throws IOException {
-        return "";
+    public void addDetail() throws IOException {
+        QueryWrapper<GoodsDetail> wrapper = new QueryWrapper<>();
+        /*
+        // 第一步
+        wrapper.select("gd_pic_url","gd_order");
+        // 查出数据库中已有的60条数据作为模板
+        List<GoodsDetail> details = goodsDetailDao.selectList(wrapper);
+        // 循环插入，但是未设置goodsId(现将数据库中goodsId字段设置为可为null)
+        for (int i = 0; i < 404; i++) {
+            for (GoodsDetail detail : details) {
+                goodsDetailDao.insert(detail);
+            }
+            System.out.println((i+1)+"个60条插完");
+        }
+        */
+        // 第二步
+        int count = 0;
+        for (int i = 1; i < 24251; i++) {
+            GoodsDetail detail = new GoodsDetail();
+            int goodsId = (((i-1)/10)+1);
+            UpdateWrapper<GoodsDetail> wrapper1 = new UpdateWrapper<>();
+            wrapper1.set("goods_id", goodsId).eq("gd_id", i);
+            count += goodsDetailDao.update(detail, wrapper1);
+            System.out.println("更新数据数："+count);
+        }
     }
 
     /**

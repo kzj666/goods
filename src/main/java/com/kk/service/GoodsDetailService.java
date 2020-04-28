@@ -1,7 +1,6 @@
 package com.kk.service;
 
 import com.kk.entity.GoodsDetail;
-import com.kk.entity.GoodsParam;
 
 import java.util.List;
 
