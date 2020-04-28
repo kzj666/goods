@@ -56,6 +56,14 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.selectOne(wrapper);
     }
 
+    /**
+     * 查询到最近五分钟内修改的商品
+     * @return
+     */
+    @Override
+    public List<Goods> findLast5M() {
+        return goodsDao.findLast5M();
+    }
 
 
 }

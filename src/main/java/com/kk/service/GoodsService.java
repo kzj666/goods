@@ -29,4 +29,8 @@ public interface GoodsService{
      */
     Goods findGoodById(Integer goodsId);
 
+
+    List<Goods> findLast5M();
+
+
 }

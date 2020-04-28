@@ -1,30 +1,31 @@
 package com.kk.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.io.Serializable;
 
 /**
  * (Goods)实体类
  *
  * @author makejava
- * @since 2020-04-25 15:57:20
+ * @since 2020-04-28 15:09:59
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_goods")
 public class Goods implements Serializable {
+//    private static final long serialVersionUID = -35289697168179836L;
     private static final long serialVersionUID = 751720845248481651L;
     /**
     * 商品id
     */
-    @TableId(type = IdType.AUTO)
     private Integer goodsId;
     /**
     * 商品名称
@@ -54,6 +55,11 @@ public class Goods implements Serializable {
     * 商品类别id
     */
     private Integer categoryId;
+    /**
+    * 最近更新时间
+    */
+    @TableField(fill = FieldFill.UPDATE)
+    private Date updateTime;
 
 
     public Integer getGoodsId() {
@@ -118,6 +124,14 @@ public class Goods implements Serializable {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
 }

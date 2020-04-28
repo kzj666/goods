@@ -2,12 +2,8 @@ package com.kk.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kk.dao.GoodsDao;
-import com.kk.dao.GoodsParamDao;
 import com.kk.entity.Goods;
-import com.kk.entity.GoodsCover;
-import com.kk.entity.GoodsParam;
 import com.kk.service.*;
-import com.kk.utils.HtmlParseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +44,6 @@ public class GoodsController {
     private EvaluateService evaluateService;
     @Autowired
     private TemplateEngine templateEngine;
-
-
-
-
 
 
     @GetMapping("goods")

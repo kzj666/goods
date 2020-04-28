@@ -11,8 +11,8 @@
         <result property="currentPrice" column="current_price" jdbcType="NUMERIC"/>
         <result property="isFreeDelivery" column="is_free_delivery" jdbcType="INTEGER"/>
         <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
-
 
 
 </mapper>

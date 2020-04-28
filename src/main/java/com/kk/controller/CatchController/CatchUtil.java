@@ -126,9 +126,7 @@ public class CatchUtil {
             for (int i = 0; i < 6; i++) {
                 // 拿到第i页的评论 对象列表
                 List<Evaluate> evaluates = HtmlParseUtil.parseGoodsEvaluate(i);
-//                System.out.println(evaluates);
                 count += evaluateService.addEvaluate(evaluates);
-//                System.out.println("------------------------第"+(i+1)+"个商品的评论插完了---------------------------");
             }
         }
 
