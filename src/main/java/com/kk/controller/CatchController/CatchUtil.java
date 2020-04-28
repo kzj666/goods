@@ -105,27 +105,17 @@ public class CatchUtil {
         return "爬取了" + count + "";
     }
 
-
     /**
-     * 插入商品详情图片到GoodsDetial对象对应的t_goods_detail表中
-     *
+     * 未实现
      * @return
      * @throws IOException
-     *//*
+     */
     @ResponseBody
     @GetMapping("addDetail")
     public String addDetail() throws IOException {
-        long begin = System.currentTimeMillis();
-        int count = 0;
-        //爬到数据
-        for (int i = 1; i < 2; i++) {
-            List<String> list = HtmlParseUtil.parseGoodsUrl(i);
-            List<GoodsDetail> details = HtmlParseUtil.parseGoodsPic(list);
-        }
-        long end = System.currentTimeMillis();
-        System.out.println("爬数据插数据用时：" + (end - begin) + "毫秒");
-        return "爬取了" + count +"";
-    }*/
+        return "";
+    }
+
     @ResponseBody
     @GetMapping("addEvaluate")
     public String addEvaluate() throws IOException {

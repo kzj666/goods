@@ -103,7 +103,7 @@ public class HtmlParseUtil {
     }
 
     /**
-     * 拿到各商品的主页跳转链接，放入ArrayList<String>链接列表中后返回
+     * 拿到  【聚美优品】  各商品的主页跳转链接，放入ArrayList<String>链接列表中后返回
      *
      * @param p
      * @return
@@ -185,9 +185,23 @@ public class HtmlParseUtil {
         return paramsList;
     }
 
+    /**
+     * 未实现
+     * @param list
+     * @return
+     * @throws IOException
+     */
+    public static List<GoodsDetail> parseGoodsDetail(List<String> list) throws IOException {
+        return null;
+    }
 
-
-
+    /**
+     * 利用参数i拿到的不同分页的评论列表，放入List<Evaluate>列表后返回
+     * 此方法与几个方法不同，这里是拿到网页的json数据，处理后放入对象中
+     * @param i
+     * @return
+     * @throws NullPointerException
+     */
     public static List<Evaluate> parseGoodsEvaluate(int i)throws NullPointerException{
         final String GET_COMMENTS_URL = "https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&productId=100006262957&score="+i+"&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1";
         HttpRequest request = HttpUtil.createGet(GET_COMMENTS_URL);
@@ -204,7 +218,6 @@ public class HtmlParseUtil {
         ArrayList<String> list1 = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         ArrayList<Evaluate> list3 = new ArrayList<>();
-
 
         try {
             comments.forEach(comment -> list1.add(((JSONObject) comment).get("content").toString()));

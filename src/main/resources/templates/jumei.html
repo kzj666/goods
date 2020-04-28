@@ -24,8 +24,10 @@
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta property="qc:admins" content="56207406376255516375" />
-    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/common.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/app.css}" />
+    <!--<link rel="stylesheet" type="text/css" href="//a1.global.jmstatic.com/b7e3d92f24cf2afe/common.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="//a3.global.jmstatic.com/a8c98f9df9004d8c/app.css" />-->
+    <link rel="stylesheet" type="text/css" href="./goods/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./goods/css/app.css" />
     <script type="text/javascript">document.domain = 'jumeiglobal.com';
     var JM = JM || {};
     JM.SITE_MAIN_WEBBASEURL = 'http://www.jumeiglobal.com/';
@@ -65,7 +67,8 @@
     _adwq.push(['_setAccount', '1ng4e']);
     _adwq.push(['_setDomainName', '.jumeiglobal.com']);
     _adwq.push(['_trackPageview']);</script>
-    <link rel="stylesheet" type="text/css" th:href="@{/goods/css/detail_other.css}" />
+    <!--<link rel="stylesheet" type="text/css" href="http://a1.global.jmstatic.com/aef54daf5cb94ea4/detail_other.css" />-->
+    <link rel="stylesheet" type="text/css" href="./goods/css/detail_other.css" />
 </head>
 <style>
     .deal_con_content td{
@@ -569,10 +572,12 @@ window.jQuery = window.$ = function(callback) {
 </div>
 <!-- footer end -->
 
-
-<script src="//a2.global.jmstatic.com/802cb9123876d5e2/lib.js"></script>
-<script src="//a3.global.jmstatic.com/00120eedcc6d9b2d/ui.js"></script>
-<script src="//a1.global.jmstatic.com/15267947c479f1c4/app.js"></script>
+<!--<script src="//a2.global.jmstatic.com/802cb9123876d5e2/lib.js" ></script>-->
+<!--<script src="//a3.global.jmstatic.com/00120eedcc6d9b2d/ui.js"></script>-->
+<!--<script src="//a1.global.jmstatic.com/15267947c479f1c4/app.js"></script>-->
+<script src="./goods/js/lib.js"></script>
+<script src="./goods/js/ui.js"></script>
+<script src="./goods/js/app.js"></script>
 <script>if ((JM.SERVER_TIME >= 1454774401 && JM.SERVER_TIME <= 1454806799) || (JM.SERVER_TIME >= 1454839201 && JM.SERVER_TIME <= 1454893199) || (JM.SERVER_TIME >= 1454925601 && JM.SERVER_TIME <= 1454979599) || (JM.SERVER_TIME >= 1455012001 && JM.SERVER_TIME <= 1455065999) || (JM.SERVER_TIME >= 1455098401 && JM.SERVER_TIME <= 1455152399) || (JM.SERVER_TIME >= 1455184801 && JM.SERVER_TIME <= 1455238799) || (JM.SERVER_TIME >= 1455271201 && JM.SERVER_TIME <= 1455325199)) {
     $(function() {
         $("#detailfaq").off("click");
@@ -597,14 +602,17 @@ window.jQuery = window.$ = function(callback) {
 
     });
 }</script>
-<script src="http://a2.global.jmstatic.com/76026a0f883806bb/detail_main.js"></script>
-<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>
+<!--<script src="http://a2.global.jmstatic.com/76026a0f883806bb/detail_main.js"></script>-->
+<script src="./goods/js/detail_main.js"></script>
+<!--<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>-->
+<script type="text/javascript" src="./goods/js/ld.js" async="true"></script>
 <script type="text/javascript">
 (function() {
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;
-    ga.src = 'http://s0.jmstatic.com/templates/jumei/js/jquery/dc.js';
+    // ga.src = 'http://s0.jmstatic.com/templates/jumei/js/jquery/dc.js';
+    ga.src = './goods/js/jquery/dc.js';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
 })();
