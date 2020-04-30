@@ -6,11 +6,14 @@ import com.kk.entity.PromotionSeckill;
 import com.kk.dao.PromotionSeckillDao;
 import com.kk.exception.SecKillException;
 import com.kk.service.PromotionSeckillService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 秒杀促销商品表(PromotionSeckill)表服务实现类
@@ -24,38 +27,8 @@ public class PromotionSeckillServiceImpl implements PromotionSeckillService {
     private PromotionSeckillDao promotionSeckillDao;
     @Resource
     private RedisTemplate redisTemplate;
-
-    @Override
-    public void processSecKill(Long psId, String userId, Integer num) throws SecKillException {
-        // 根据psId查出活动商品信息
-        PromotionSeckill ps = promotionSeckillDao.selectById(psId);
-        if (null == ps){
-            throw new SecKillException("秒杀活动不存在");
-        }
-        if (ps.getStatus() == 0){
-            throw new SecKillException("秒杀活动未开始");
-        }else if (ps.getStatus() == 2){
-            throw new SecKillException("秒杀活动已结束");
-        }
-        // 抢购成功，将商品弹出列表
-        Integer goodsId = (Integer)redisTemplate.opsForList().leftPop("seckill:count:" + ps.getPsId());
-        if (goodsId != null) {
-            // 此处判断该用户是否已经抢购过本商品
-            Boolean isExist = redisTemplate.opsForSet().isMember("seckill:user:" + ps.getPsId(), userId);
-            if(!isExist){
-                System.out.println("恭喜您，抢购成功！");
-                redisTemplate.opsForSet().add("seckill:user:"+ps.getPsId(),userId);
-            }else {
-                // 如果该用户已经抢购过了，则要对 因他的访问而从list弹出的商品 进行补偿
-                redisTemplate.opsForList().rightPush("seckill:count:" + ps.getPsId(), ps.getGoodsId());
-                throw new SecKillException("您已抢购过本商品，不可重复抢购");
-            }
-        }else {
-            // 如果
-//            redisTemplate.opsForList().rightPush("seckill:count:" + ps.getPsId(), ps.getGoodsId());
-            throw new SecKillException("该商品已被抢光");
-        }
-    }
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 查找已在活动时间但是未进入开始状态的促销商品
@@ -83,4 +56,60 @@ public class PromotionSeckillServiceImpl implements PromotionSeckillService {
     public void updateStatus(PromotionSeckill promotionSeckill) {
         promotionSeckillDao.updateById(promotionSeckill);
     }
+
+    /**
+     * 处理秒杀请求的方法
+     * @param psId
+     * @param userId
+     * @param num
+     * @throws SecKillException
+     */
+    @Override
+    public void processSecKill(Long psId, String userId, Integer num) throws SecKillException {
+        // 根据psId查出活动商品信息
+        PromotionSeckill ps = promotionSeckillDao.selectById(psId);
+        if (null == ps){
+            throw new SecKillException("秒杀活动不存在");
+        }
+        if (ps.getStatus() == 0){
+            throw new SecKillException("秒杀活动未开始");
+        }else if (ps.getStatus() == 2){
+            throw new SecKillException("秒杀活动已结束");
+        }
+        // 抢购成功，将商品弹出列表
+        Integer goodsId = (Integer)redisTemplate.opsForList().leftPop("seckill:count:" + ps.getPsId());
+        if (goodsId != null) {
+            // 此处判断该用户是否已经抢购过本商品
+            Boolean isExist = redisTemplate.opsForSet().isMember("seckill:user:" + ps.getPsId(), userId);
+            if(!isExist){
+                System.out.println("恭喜您，抢购成功！");
+                redisTemplate.opsForSet().add("seckill:user:"+ps.getPsId(),userId);
+            }else {
+                // 如果该用户已经抢购过了，则要对 因他的访问而从list弹出的商品 进行补偿
+                redisTemplate.opsForList().rightPush("seckill:count:" + ps.getPsId(), ps.getGoodsId());
+                throw new SecKillException("您已抢购过本商品，不可重复抢购");
+            }
+        }else {
+            throw new SecKillException("该商品已被抢光");
+        }
+    }
+
+
+     /**
+     * 将订单信息发送给队列
+     * @param userId
+     * @return 返回uuid的订单编号
+     */
+    @Override
+    public String SendOrderToQueue(String userId){
+        System.out.println("准备向队列发送信息");
+        HashMap<String, String> data = new HashMap<>();
+        data.put("userId", userId);
+        String orderNo = UUID.randomUUID().toString();
+        data.put("orderNo",orderNo );
+        // put其他订单消息
+        rabbitTemplate.convertAndSend("exchange-order", null, data);
+        return orderNo;
+    }
+
 }

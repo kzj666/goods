@@ -14,9 +14,6 @@ import java.util.List;
  */
 public interface PromotionSeckillService {
 
-
-    void processSecKill(Long psId, String userId, Integer num) throws SecKillException;
-
     /**
      * 查找已在活动时间但是未进入开始状态的促销商品
      * @return
@@ -34,5 +31,21 @@ public interface PromotionSeckillService {
      * @param promotionSeckill
      */
     void updateStatus(PromotionSeckill promotionSeckill);
+
+    /**
+     * 处理秒杀请求的方法
+     * @param psId
+     * @param userId
+     * @param num
+     * @throws SecKillException
+     */
+    void processSecKill(Long psId, String userId, Integer num) throws SecKillException;
+
+    /**
+     * 将订单信息发送给队列
+     * @param userId
+     * @return 返回uuid的订单编号
+     */
+    String SendOrderToQueue(String userId);
 
 }

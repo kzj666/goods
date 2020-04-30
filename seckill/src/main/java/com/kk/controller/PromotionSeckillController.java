@@ -37,7 +37,12 @@ public class PromotionSeckillController {
     @Resource
     private GoodsParamService goodsParamService;
 
-
+    /**
+     * 跳转到秒杀页面
+     * @param psId
+     * @param model
+     * @return
+     */
     @GetMapping("seckillpage")
     public String toSecKillPage(@RequestParam("psId") Long psId, Model model){
         PromotionSeckill seckill = promotionSeckillDao.selectById(psId);
@@ -50,15 +55,25 @@ public class PromotionSeckillController {
         return "seckill";
     }
 
-
+    /**
+     * 处理秒杀下单请求
+     * @param psId
+     * @param userId
+     * @return
+     */
     @GetMapping("seckill")
     @ResponseBody
     public Map processSecKill(Long psId, String userId){
-        HashMap<String, String> result = new HashMap<>();
+        HashMap result = new HashMap();
         try {
             promotionSeckillService.processSecKill(psId, userId, 1);
+            // 将订单放入消息队列中
+            String orderNo = promotionSeckillService.SendOrderToQueue(userId);
+            HashMap<String, String> data = new HashMap<>();
+            data.put("orderNo", orderNo);
             result.put("code", "0");
             result.put("message", "success");
+            result.put("data", data);
         } catch (SecKillException e) {
             result.put("code", "500");
             result.put("message", e.getMessage());

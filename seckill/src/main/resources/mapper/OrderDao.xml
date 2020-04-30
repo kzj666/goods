@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.dao.OrderDao">
+
+    <resultMap type="com.kk.entity.Order" id="OrderMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <result property="orderStatus" column="order_status" jdbcType="INTEGER"/>
+        <result property="recvName" column="recv_name" jdbcType="VARCHAR"/>
+        <result property="recvAddress" column="recv_address" jdbcType="VARCHAR"/>
+        <result property="recvMobile" column="recv_mobile" jdbcType="VARCHAR"/>
+        <result property="postage" column="postage" jdbcType="NUMERIC"/>
+        <result property="amount" column="amount" jdbcType="NUMERIC"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+</mapper>
