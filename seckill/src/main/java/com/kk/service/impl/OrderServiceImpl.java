@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             // 创建订单前还有支付，物流系统的对接，日志登记等等额外操作
-            Thread.sleep(10000);
+            Thread.sleep(5000);
             Order order = new Order();
             order.setOrderNo(data.get("orderNo").toString());
             order.setAmount(19.8);
