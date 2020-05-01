@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>继续等待</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</head>
+<input type="hidden" th:value="${orderNo}" id="orderNo">
+<body>
+<script type="text/javascript">
+    var orderNo = document.getElementById('orderNo').value;
+    swal({
+        title: "正在生成订单，请稍后...",
+        timer: 3000,
+        showConfirmButton: false,
+        button : "刷新",
+        type: "info"
+    }).then(function (result) {
+        window.location.href="/checkorder?orderNo="+orderNo;
+    })
+
+
+</script>
+</body>
+</html>

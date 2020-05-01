@@ -2,9 +2,14 @@ package com.kk.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.kk.dao.GoodsDao;
+import com.kk.dao.OrderDao;
+import com.kk.entity.Goods;
+import com.kk.entity.Order;
 import com.kk.entity.PromotionSeckill;
 import com.kk.dao.PromotionSeckillDao;
 import com.kk.exception.SecKillException;
+import com.kk.service.OrderService;
 import com.kk.service.PromotionSeckillService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +34,8 @@ public class PromotionSeckillServiceImpl implements PromotionSeckillService {
     private RedisTemplate redisTemplate;
     @Resource
     private RabbitTemplate rabbitTemplate;
+    @Resource
+    private OrderService orderService;
 
     /**
      * 查找已在活动时间但是未进入开始状态的促销商品
@@ -94,22 +101,30 @@ public class PromotionSeckillServiceImpl implements PromotionSeckillService {
         }
     }
 
-
      /**
-     * 将订单信息发送给队列
+     * 将秒杀订单信息发送给队列
      * @param userId
      * @return 返回uuid的订单编号
      */
     @Override
     public String SendOrderToQueue(String userId){
         System.out.println("准备向队列发送信息");
-        HashMap<String, String> data = new HashMap<>();
+        HashMap data = new HashMap();
         data.put("userId", userId);
         String orderNo = UUID.randomUUID().toString();
         data.put("orderNo",orderNo );
         // put其他订单消息
         rabbitTemplate.convertAndSend("exchange-order", null, data);
         return orderNo;
+    }
+
+    /**
+     * 查询订单是否生成
+     * @param orderNo
+     * @return
+     */
+    public Order checkOrder(String orderNo){
+        return orderService.findByOrderNo(orderNo);
     }
 
 }

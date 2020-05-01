@@ -26,8 +26,8 @@ public class Order implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer orderId;
     /**
-    * 订单业务编号
-    */
+     * 订单业务编号
+     */
     private String orderNo;
     /**
     * 订单状态（0表示已创建，1表示已支付，2表示已发货，3表示已收货，4表示已评价）

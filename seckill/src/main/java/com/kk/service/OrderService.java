@@ -16,6 +16,6 @@ public interface OrderService {
      * @param orderNo
      * @return
      */
-    Order findByOrderId(String orderNo);
+    Order findByOrderNo(String orderNo);
 
 }

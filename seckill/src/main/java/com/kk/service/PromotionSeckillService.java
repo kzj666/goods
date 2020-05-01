@@ -44,7 +44,7 @@ public interface PromotionSeckillService {
     /**
      * 将订单信息发送给队列
      * @param userId
-     * @return 返回uuid的订单编号
+     * @return
      */
     String SendOrderToQueue(String userId);
 

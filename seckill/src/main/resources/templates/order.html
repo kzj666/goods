@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" async="" src="http://cdn.zampda.net/s.js"></script>
+    <script type="text/javascript" async="" src="http://s.emarbox.com/js/adw.js"></script>
+    <script type="text/javascript" async="" src="http://t.agrantsem.com/js/ag.js"></script>
+    <!-- 听云监控 -->
+    <script type="text/javascript" src="http://hm.baidu.com/h.js?884477732c15fb2f2416fb892282394b"></script>
+    <script type="text/javascript" async="" src="http://s0.jmstatic.com/templates/jumei/js/jquery/dc.js"></script>
+    <title>购物车 - 聚美优品</title></head>
+
+<body>
+<div id="cboxOverlay" style="display: none;"></div>
+<div id="colorbox" class="" style="padding-bottom: 50px; padding-right: 50px; display: none;">
+    <div id="cboxWrapper">
+        <div>
+            <div id="cboxTopLeft" style="float: left;"></div>
+            <div id="cboxTopCenter" style="float: left;"></div>
+            <div id="cboxTopRight" style="float: left;"></div>
+        </div>
+        <div style="clear:left">
+            <div id="cboxMiddleLeft" style="float: left;"></div>
+            <div id="cboxContent" style="float: left;">
+                <div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden;" class=""></div>
+                <div id="cboxLoadingOverlay" class=""></div>
+                <div id="cboxLoadingGraphic" class=""></div>
+                <div id="cboxTitle" class=""></div>
+                <div id="cboxCurrent" class=""></div>
+                <div id="cboxNext" class=""></div>
+                <div id="cboxPrevious" class=""></div>
+                <div id="cboxSlideshow" class=""></div>
+                <div id="cboxClose" class=""></div>
+            </div>
+            <div id="cboxMiddleRight" style="float: left;"></div>
+        </div>
+        <div style="clear:left">
+            <div id="cboxBottomLeft" style="float: left;"></div>
+            <div id="cboxBottomCenter" style="float: left;"></div>
+            <div id="cboxBottomRight" style="float: left;"></div>
+        </div>
+    </div>
+    <div style="position:absolute; width:9999px; visibility:hidden; display:none"></div>
+</div>
+<style type="text/css">.cart_header {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.cart_header_box {
+    border-bottom: 2px solid #e5e5e5;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    padding-bottom: 15px;
+}
+
+.cart_header .logo_box {
+    float: left;
+}
+
+.cart_header .logo_box .logo {
+    width: 130px;
+    overflow: hidden;
+    float: left;
+}
+
+.cart_header .logo_box .text {
+    float: left;
+    margin-top: 9px;
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.cart_header .logo_box .text .phone {
+    font-size: 16px;
+}
+
+.cart_header .logo_box .text .time {
+    color: grey;
+}
+
+.cart_header .order_path {
+    float: right;
+    width: 377px;
+    height: 48px;
+}
+
+.cart_header .order_path_1 {
+    background: url(http://f0.jmstatic.com/static_cart/dist/20191009_1/images/order_path.png) no-repeat;
+    background-position: -2px -2px;
+}
+
+.cart_header .order_path_2 {
+    background: url(http://f0.jmstatic.com/static_cart/dist/20191009_1/images/order_path.png) no-repeat;
+    background-position: -2px -54px;
+}
+
+.cart_header .order_path_3 {
+    background: url(http://f0.jmstatic.com/static_cart/dist/20191009_1/images/order_path.png) no-repeat;
+    background-position: -2px -106px;
+}
+
+.cart_header .order_path_4 {
+    background: url(http://f0.jmstatic.com/static_cart/dist/20191009_1/images/order_path.png) no-repeat;
+    background-position: -2px -158px;
+}
+
+.cart_top {
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    color: #999999;
+    width: 960px;
+    margin: 0 auto;
+}
+
+.cart_top .user_box {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.cart_top .user_box .tips {
+    font-style: normal;
+    color: #dddddd;
+    padding: 0 5px;
+}
+
+.cart_top .user_box .out, .cart_top .user_box .query {
+    color: #999999;
+}
+
+.cart_top .user_box a:hover {
+    text-decoration: none;
+    color: #ed145b;
+}</style>
+<div style="background: white;">
+    <div class="cart_header_box">
+        <div class="cart_header clearfix">
+            <div class="logo_box">
+                <div class="logo">
+                    <a href="#" id="home">
+                        <img src="http://f0.jmstatic.com/static_cart/dist/20191009_1/images/cart_logo.jpg?v=1"
+                             alt="化妆品团购"></a>
+                </div>
+            </div>
+            <div class="order_path order_path_1
+          ">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="container" style="width: auto;">
+    <link rel="stylesheet" href="http://f0.jmstatic.com/static_cart/dist/20191009_1/css/show/show.css">
+    <script type="text/javascript" src="http://f0.jmstatic.com/static_lib/dist/20150412/website.min.js"></script>
+    <script type="text/javascript" src="http://f0.jmstatic.com/static_cart/dist/20191009_1/js/boot.js"></script>
+    <div class="content_show_wrapper">
+        <div class="cart_notification cart_error" style="">
+            <div class="message">
+                <p>
+                </p>
+            </div>
+        </div>
+        <div id="group_show">
+            <div class="groups_wrapper">
+                <table class="cart_group_item  cart_group_item_media">
+                    <thead>
+                    <tr>
+                        <th class="cart_overview">
+                            <div class="cart_group_header">
+                                <h2>名品特卖</h2></div>
+                        </th>
+                        <th class="cart_price">聚美价（元）</th>
+                        <th class="cart_num">数量</th>
+                        <th class="cart_total">小计（元）</th>
+                        <th class="cart_option">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="cart_item " hashid="df20042312369730p4538086"
+                        id="df4538086197683373_df20042312369730p4538086" product_id="4538086" item_price="279.00"
+                        category_v3_3="23" brand_id="19748" product_type="media" vcb="false">
+                        <td valign="top">
+                            <div class="cart_item_desc clearfix">
+                                <div class="cart_item_desc_wrapper">
+                                    <a class="cart_item_pic" href="#">
+                                        <img src="https://p2.jmstatic.com/product/005/057/5057048_std/5057048_60_60.jpg"
+                                             alt="【24时内发货】it's skin伊思红参蜗牛水乳保湿修护套装">
+                                        <span class="sold_out_pic png"></span>
+                                    </a>
+                                    <span>MAC/魅可经典子弹头口红唇膏3g</span>
+                                    <p class="sku_info">型号：
+                                        <span class="cart_item_attribute">CB 96人鱼姬色</span>&nbsp; 容量：
+                                        <span class="cart_item_capacity">经典子弹头唇膏3g</span></p>
+                                    <div class="sale_info clearfix"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_price">
+                                <p class="jumei_price" th:text="${order.amount}"></p>
+                                <!--<p class="market_price ">550.00</p></div>-->
+                        </td>
+                        <td>
+                            <div class="cart_item_num ">
+                                <div class="item_quantity_editer clearfix"
+                                     data-item-key="df4538086197683373_df20042312369730p4538086">
+                                    <span value="1" style="text-align: right">1</span>
+                                    <div class="item_shortage_tip"></div>
+                                </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_total">
+                                <p class="item_total_price" th:text="${order.amount}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_option">
+                                <a class="icon_small delete_item png"
+                                   data-item-key="df4538086197683373_df20042312369730p4538086" href="javascript:void(0)"
+                                   title="删除"></a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td style="color: #1700ff;text-align: left"
+                            th:text="'收件人:'+${order.recvName}
+                            +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收货地址:'+${order.recvAddress}
+                            +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系方式:'+${order.recvMobile}">
+                        </td>
+                        <td colspan=" 5 ">商品金额：
+                            <span class="group_total_price" th:text=" '¥'+${order.amount}"></span></td>&nbsp;
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="common_handler">
+                <div class="right_handler">共
+                    <span class="total_amount">1</span>&nbsp;件商品 &nbsp;&nbsp; 商品应付总额：
+                    <span class="total_price" th:text=" '¥'+${order.amount}"></span>
+                    <a id="go_to_order" class="btn" href="javascript:;">去结算</a>
+                </div>
+                <a class="go_back_shopping" href="#">继续购物</a>
+                <span class="seperate_line">|</span>
+                <a class="clear_cart_all" href="">清空选中商品</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

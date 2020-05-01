@@ -1,6 +1,7 @@
 package com.kk.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.kk.entity.Goods;
 import com.kk.entity.Order;
 import com.kk.dao.OrderDao;
 import com.kk.service.OrderService;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 /**
  * 订单表(Order)表服务实现类
- *
+ * 在本类中实现订单从队列中取出，
  * @author makejava
  * @since 2020-05-01 00:34:29
  */
@@ -34,26 +35,32 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public Order findByOrderId(String orderNo) {
+    public Order findByOrderNo(String orderNo) {
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         wrapper.eq("order_no", orderNo);
         return orderDao.selectOne(wrapper);
     }
 
+
+    /**
+     * 将订单从队列中取出，生成数据库订单数据
+     * @param data
+     * @param channel
+     * @param headers
+     */
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = "queue-order"),
                     exchange = @Exchange(value = "exchange-order" ,type = "fanout")
             )
     )
-
     @RabbitHandler
     public void handleMessage(@Payload Map data, Channel channel, @Headers Map<String, Object> headers){
         System.out.println("获得订单的数据"+data);
 
         try {
             // 创建订单前还有支付，物流系统的对接，日志登记等等额外操作
-            Thread.sleep(5000);
+            Thread.sleep(10000);
             Order order = new Order();
             order.setOrderNo(data.get("orderNo").toString());
             order.setAmount(19.8);
