@@ -4,10 +4,8 @@ spring:
   profiles:
     active: dev
   datasource:
-    #    url: jdbc:mysql://www.kzj666.cn:3306/jumei?userUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
     url: jdbc:mysql://localhost:3306/jumei?userUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
     username: root
-    #    password: 123456
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:

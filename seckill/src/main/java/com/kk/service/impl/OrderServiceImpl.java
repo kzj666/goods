@@ -54,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
                     exchange = @Exchange(value = "exchange-order" ,type = "fanout")
             )
     )
+    
     @RabbitHandler
     public void handleMessage(@Payload Map data, Channel channel, @Headers Map<String, Object> headers){
         System.out.println("获得订单的数据"+data);
