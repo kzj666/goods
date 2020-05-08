@@ -1,7 +1,7 @@
 ## 一个实现核心功能的秒杀系统
 - 基于SpringBoot 2.2.6
 - 采用thymeleaf模板引擎
-- OOM采用MyBatisPlus框架
+- ORM采用MyBatisPlus框架
 - 利用jsoup以及HuTool爬取聚美优品热卖网数据
 - redis实现缓存，提高系统处理性能
 - 利用redis的List和Set存储类型，防止商品的超卖
