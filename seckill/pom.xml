@@ -20,6 +20,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.kk</groupId>
+            <artifactId>goods</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--rabbitmq-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
